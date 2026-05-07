@@ -14,6 +14,8 @@ const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
   JWT_ACCESS_SECRET: z.string().min(32),
   AUTH_SERVICE_URL: z.string().url(),
+  CHAT_SERVICE_URL: z.string().url().optional(),
+  NOTIFICATION_SERVICE_URL: z.string().url().optional(),
 });
 
 validateEnv(envSchema);

@@ -9,7 +9,8 @@ const MAX_RETRIES = 5;
 
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect(process.env.MONGODB_URI);
+    const mongoUri = process.env.MONGODB_URI || process.env.MONGO_URL;
+    const conn = await mongoose.connect(mongoUri);
     logger.info(`✅ Chat MongoDB Connected: ${conn.connection.host}`);
     retryCount = 0;
   } catch (error) {

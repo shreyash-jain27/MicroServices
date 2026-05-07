@@ -13,8 +13,10 @@ let redisClient;
 
 const getRedisClient = () => {
   if (!redisClient) {
+    const redisUrl = process.env.REDIS_URL || `redis://${process.env.REDIS_HOST || 'localhost'}:${process.env.REDIS_PORT || 6379}`;
+    
     redisClient = createClient({
-      url: `redis://${process.env.REDIS_HOST || 'localhost'}:${process.env.REDIS_PORT || 6379}`,
+      url: redisUrl,
       password: process.env.REDIS_PASSWORD || undefined,
     });
 

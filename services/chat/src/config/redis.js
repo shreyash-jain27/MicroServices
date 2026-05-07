@@ -7,8 +7,10 @@ import { logger } from '@service-hub/common';
  * WHY: Redis requires separate clients for publishing and subscribing.
  */
 
+const redisUrl = process.env.REDIS_URL || `redis://${process.env.REDIS_HOST || 'localhost'}:${process.env.REDIS_PORT || 6379}`;
+
 const redisConfig = {
-  url: `redis://${process.env.REDIS_HOST || 'localhost'}:${process.env.REDIS_PORT || 6379}`,
+  url: redisUrl,
   password: process.env.REDIS_PASSWORD || undefined,
 };
 
