@@ -1,11 +1,7 @@
 import * as authService from '../services/auth.service.js';
 import { logger } from '@service-hub/common';
 
-/**
- * Auth Controller - HTTP Interface
- * 
- * PURPOSE: Maps HTTP requests to service calls and handles responses.
- */
+
 
 export const register = async (req, res, next) => {
   try {

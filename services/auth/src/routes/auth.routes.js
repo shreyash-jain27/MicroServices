@@ -5,11 +5,7 @@ import { authenticate } from '../middleware/auth.middleware.js';
 
 const router = express.Router();
 
-/**
- * Auth Routes
- * 
- * STRUCTURE: Middleware (Validation/Auth) -> Controller
- */
+
 
 router.get('/health', (req, res) => {
   res.status(200).json({

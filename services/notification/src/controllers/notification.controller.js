@@ -1,9 +1,7 @@
 import * as notificationService from '../services/notification.service.js';
 import { emailQueue } from '../config/queue.js';
 
-/**
- * Notification Controller
- */
+
 
 export const sendTestEmail = async (req, res, next) => {
   try {

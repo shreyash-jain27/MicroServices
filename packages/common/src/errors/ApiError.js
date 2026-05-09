@@ -1,10 +1,4 @@
-/**
- * Base API Error Class
- * 
- * WHY: We need a consistent structure for all errors across all services.
- * This ensures that when an error occurs, the response always includes
- * a status code, a message, and optional error details.
- */
+
 class ApiError extends Error {
   constructor(statusCode, message, isOperational = true, stack = '') {
     super(message);

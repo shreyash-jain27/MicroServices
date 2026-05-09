@@ -3,9 +3,7 @@ import * as notificationController from '../controllers/notification.controller.
 
 const router = express.Router();
 
-/**
- * Notification Routes
- */
+
 
 router.post('/test-email', notificationController.sendTestEmail);
 router.get('/stats', notificationController.getStats);

@@ -1,15 +1,7 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 
-/**
- * User Schema
- * 
- * PURPOSE: Defines the user data structure and security logic.
- * BEST PRACTICE: 
- * - Regex for email validation.
- * - Password hashing in pre-save.
- * - toJSON transform for automatic data sanitization.
- */
+
 
 const userSchema = new mongoose.Schema(
   {
@@ -53,7 +45,7 @@ const userSchema = new mongoose.Schema(
   }
 );
 
-// Auto-hash password before saving
+
 userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next();
   
@@ -62,7 +54,7 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
-// Instance method to compare password
+
 userSchema.methods.comparePassword = async function (candidatePassword) {
   return bcrypt.compare(candidatePassword, this.password);
 };

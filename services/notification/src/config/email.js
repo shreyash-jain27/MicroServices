@@ -2,11 +2,7 @@ import nodemailer from 'nodemailer';
 import sgMail from '@sendgrid/mail';
 import { logger } from '@service-hub/common';
 
-/**
- * Email Provider Configuration
- * 
- * Supports both SMTP (Gmail/Mailtrap) and SendGrid.
- */
+
 
 let transporter = null;
 

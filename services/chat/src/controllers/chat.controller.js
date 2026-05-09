@@ -5,7 +5,7 @@ export const getMessages = async (req, res, next) => {
   try {
     const { roomId } = req.params;
     const { page, limit } = req.query;
-    const userId = req.headers['x-user-id']; // Forwarded by Gateway
+    const userId = req.headers['x-user-id']; 
 
     const data = await messageService.getMessagesByRoom(roomId, userId, parseInt(page), parseInt(limit));
     res.json({ success: true, data });

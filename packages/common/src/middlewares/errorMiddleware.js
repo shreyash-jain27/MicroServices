@@ -1,13 +1,6 @@
 import logger from '../utils/logger.js';
 
-/**
- * Global Error Handler Middleware
- * 
- * WHY: This is the last line of defense. Any error thrown in the app 
- * eventually ends up here. It prevents the server from crashing and
- * ensures the client receives a proper JSON error message instead of 
- * a HTML stack trace (which is a security risk).
- */
+
 export const errorConverter = (err, req, res, next) => {
   let error = err;
   if (!(error instanceof Error)) {

@@ -7,11 +7,7 @@ import { initEmail, getTransporter } from '../config/email.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-/**
- * Email Service
- * 
- * Handlebars templating and physical email sending.
- */
+
 
 const transporter = initEmail();
 

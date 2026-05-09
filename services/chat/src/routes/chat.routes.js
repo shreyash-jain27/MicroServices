@@ -3,12 +3,7 @@ import * as chatController from '../controllers/chat.controller.js';
 
 const router = express.Router();
 
-/**
- * Chat REST Routes
- * 
- * Note: Authentication is handled by the Gateway. 
- * We rely on 'x-user-id' header.
- */
+
 
 router.get('/health', (req, res) => {
   res.status(200).json({

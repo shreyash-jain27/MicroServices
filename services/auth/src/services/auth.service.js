@@ -3,12 +3,7 @@ import { ApiError } from '@service-hub/common';
 import * as jwtUtils from '../utils/jwt.utils.js';
 import { client as redisClient } from '../config/redis.js';
 
-/**
- * Auth Service - Business Logic Layer
- * 
- * PURPOSE: Handles user registration, login, and token rotation.
- * STRUCTURE: Pure business logic, independent of Express/HTTP.
- */
+
 
 export const register = async (name, email, password) => {
   const userExists = await User.findOne({ email });
@@ -21,7 +16,7 @@ export const register = async (name, email, password) => {
   
   await jwtUtils.storeRefreshToken(user._id, refreshToken, tokenId);
 
-  // Trigger Notification Service
+  
   try {
     await redisClient.publish('AUTH:USER_REGISTERED', JSON.stringify({
       userId: user._id,
@@ -30,7 +25,7 @@ export const register = async (name, email, password) => {
       timestamp: new Date().toISOString()
     }));
   } catch (err) {
-    // We don't want to fail registration if notification fails
+    
     console.error('Failed to publish AUTH:USER_REGISTERED event:', err);
   }
 
@@ -60,7 +55,7 @@ export const refreshTokens = async (oldRefreshToken) => {
     throw new ApiError(401, 'Session expired or invalid');
   }
 
-  // Token Rotation: Delete old session and create a new one
+  
   await jwtUtils.deleteRefreshToken(decoded.id, decoded.tokenId);
 
   const { accessToken, refreshToken, tokenId } = jwtUtils.generateTokenPair(decoded.id);

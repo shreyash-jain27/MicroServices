@@ -1,15 +1,9 @@
 import jwt from 'jsonwebtoken';
 import { ApiError } from '@service-hub/common';
 
-/**
- * JWT Verification Middleware (Gateway)
- * 
- * PURPOSE: Verifies the access token signature locally.
- * WHY: This allows the gateway to reject unauthorized requests 
- * without bothering the backend services.
- */
+
 export const verifyJWT = (req, res, next) => {
-  // Public routes that don't need token verification
+  
   const publicPaths = ['/auth/register', '/auth/login', '/auth/refresh'];
   if (publicPaths.includes(req.path)) {
     return next();
@@ -24,7 +18,7 @@ export const verifyJWT = (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
-    req.user = decoded; // Attach decoded user info (id) to the request
+    req.user = decoded; 
     next();
   } catch (error) {
     let message = 'Invalid token';

@@ -1,11 +1,7 @@
 import jwt from 'jsonwebtoken';
 import { logger } from '@service-hub/common';
 
-/**
- * Socket.IO Authentication Middleware
- * 
- * WHY: Verifies user identity before allowing a WebSocket connection.
- */
+
 export const socketAuth = (socket, next) => {
   const token = socket.handshake.auth?.token;
 
@@ -16,7 +12,7 @@ export const socketAuth = (socket, next) => {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_ACCESS_SECRET);
-    socket.user = decoded; // Attach user info to socket
+    socket.user = decoded; 
     logger.info(`✅ User ${decoded.id} authenticated via WebSocket`);
     next();
   } catch (error) {

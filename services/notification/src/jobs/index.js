@@ -4,11 +4,7 @@ import { logger } from '@service-hub/common';
 import emailProcessor from './processors/email.processor.js';
 import pushProcessor from './processors/push.processor.js';
 
-/**
- * Worker Registration
- * 
- * WHY: This initializes the actual processes that watch the queues.
- */
+
 
 let emailWorker;
 let pushWorker;
@@ -24,7 +20,7 @@ export const initWorkers = () => {
     concurrency: 5 
   });
 
-  // Event Listeners
+  
   emailWorker.on('completed', (job) => logger.info(`✅ Email Job ${job.id} completed`));
   emailWorker.on('failed', (job, err) => logger.error(`❌ Email Job ${job.id} failed: ${err.message}`));
 

@@ -6,9 +6,7 @@ import services from './config/services.config.js';
 
 dotenv.config();
 
-/**
- * Gateway Environment Validation
- */
+
 const envSchema = z.object({
   PORT: z.string().default('3000'),
   NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
@@ -29,7 +27,7 @@ const server = app.listen(PORT, () => {
   logger.info('----------------------------------------------');
 });
 
-// Graceful Shutdown
+
 const shutdown = () => {
   logger.info('Gracefully shutting down API Gateway...');
   server.close(() => {

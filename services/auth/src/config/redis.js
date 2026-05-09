@@ -1,13 +1,7 @@
 import { createClient } from 'redis';
 import { logger } from '@service-hub/common';
 
-/**
- * Redis Singleton Client
- * 
- * PURPOSE: Provides a single, shared instance of the Redis client.
- * STRUCTURE: Exports the client and a connection function.
- * BEST PRACTICE: Uses event listeners to log connectivity issues immediately.
- */
+
 
 let redisClient;
 

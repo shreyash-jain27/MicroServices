@@ -11,10 +11,10 @@ export const onSendMessage = (io, socket) => {
 
       const message = await messageService.createMessage(roomId, userId, senderName, content, type);
 
-      // Broadcast to everyone in the room
+      
       io.to(roomId).emit('new-message', { roomId, message });
 
-      // Publish event for Notification Service
+      
       const room = await Room.findById(roomId);
       if (room) {
         await redisPub.publish('CHAT:NEW_MESSAGE', JSON.stringify({

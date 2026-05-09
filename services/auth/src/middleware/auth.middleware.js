@@ -2,12 +2,7 @@ import { verifyAccessToken } from '../utils/jwt.utils.js';
 import { ApiError } from '@service-hub/common';
 import User from '../models/User.model.js';
 
-/**
- * Authentication Middleware
- * 
- * PURPOSE: Validates the Access Token.
- * CONNECTS TO: Protected routes in auth.routes.js.
- */
+
 export const authenticate = async (req, res, next) => {
   try {
     let token;

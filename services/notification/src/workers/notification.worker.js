@@ -3,11 +3,7 @@ import { redisConnection } from '../config/queue.js';
 import { sendEmail } from '../utils/email.utils.js';
 import { logger } from '@service-hub/common';
 
-/**
- * Notification Worker
- * 
- * PURPOSE: Processes jobs from the 'notifications' queue.
- */
+
 export const initWorker = () => {
   const worker = new Worker('notifications', async (job) => {
     const { type, data } = job.data;
@@ -36,7 +32,7 @@ export const initWorker = () => {
     }
   }, { 
     connection: redisConnection,
-    concurrency: 5, // Process 5 emails at a time
+    concurrency: 5, 
   });
 
   worker.on('completed', (job) => {

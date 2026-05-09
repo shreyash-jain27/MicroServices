@@ -10,13 +10,30 @@ This project is structured as a monorepo. To deploy it to Railway, follow these 
 1. Log in to Railway and click **"New Project"**.
 2. Select **"Deploy from GitHub repo"** and choose your repository.
 
-## 3. Provision Databases
+## 3. Generate Secrets (JWT)
+You need to generate secure random strings for your JWT secrets. You can run this command in your terminal to get a 32-character hex string:
+```bash
+node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+```
+*   **JWT_ACCESS_SECRET**: Use one generated string. **This must be identical in all services (Gateway, Auth, Chat).**
+*   **JWT_REFRESH_SECRET**: Use a second, different generated string. (Only needed in Auth).
+
+## 4. Provision Databases
 Before configuring the services, add the required managed databases:
 1. In your project, click **"Add Service"** -> **"Database"** -> **"MongoDB"**.
 2. Click **"Add Service"** -> **"Database"** -> **"Redis"**.
 
-## 4. Set Up Microservices
-You need to create 4 separate services in Railway, all pointing to the same repository but using different Dockerfiles.
+Railway will automatically create variables like `MONGODB_URL` and `REDIS_URL` for these services.
+
+## 5. Set Up Microservices
+You need to create 4 separate services in Railway. When adding variables, you can **reference** the database URLs.
+
+### How to Reference in Railway:
+In the "Variables" tab of a service (like `auth`):
+1. Click **"New Variable"**.
+2. For the value, type `${{` and Railway will show a dropdown of available variables from your MongoDB and Redis services.
+3. Select `MongoDB.MONGODB_URL` or `Redis.REDIS_URL`.
+
 
 ### A. API Gateway (Entry Point)
 1. Click **"Add Service"** -> **"GitHub Repo"** -> Select your repo.

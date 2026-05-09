@@ -1,10 +1,6 @@
 import mongoose from 'mongoose';
 
-/**
- * Chat Room Model
- * 
- * PURPOSE: Manages group chats and direct messages.
- */
+
 const roomSchema = new mongoose.Schema(
   {
     name: {

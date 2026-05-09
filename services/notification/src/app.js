@@ -10,7 +10,7 @@ app.use(helmet());
 app.use(express.json());
 app.use(cors());
 
-// Health Check
+
 app.get('/health', (req, res) => {
   res.status(200).json({
     success: true,
@@ -20,7 +20,7 @@ app.get('/health', (req, res) => {
   });
 });
 
-// Routes
+
 app.use('/notifications', notificationRoutes);
 
 app.use(errorConverter);

@@ -7,10 +7,7 @@ import { logger, validateEnv } from '@service-hub/common';
 
 dotenv.config();
 
-/**
- * Environment Variable Schema
- * Ensuring we have all required secrets before starting.
- */
+
 const envSchema = z.object({
   PORT: z.string().default('3001'),
   NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
@@ -30,11 +27,11 @@ let server;
 
 const startServer = async () => {
   try {
-    // 1. Connect to Data Stores
+    
     await connectDB();
     await connectRedis();
 
-    // 2. Start Listening
+    
     server = app.listen(PORT, () => {
       logger.info(`🚀 Auth Service is running on port ${PORT}`);
     });
@@ -45,7 +42,7 @@ const startServer = async () => {
   }
 };
 
-// Graceful Shutdown Logic
+
 const gracefulShutdown = async (signal) => {
   logger.info(`Received ${signal}. Starting graceful shutdown...`);
   

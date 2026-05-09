@@ -3,13 +3,7 @@ import crypto from 'crypto';
 import { client as redisClient } from '../config/redis.js';
 import { logger } from '@service-hub/common';
 
-/**
- * JWT & Redis Token Utilities
- * 
- * PURPOSE: Handles token creation, verification, and Redis storage.
- * STRUCTURE: Uses tokenId for device-specific logout and rotation.
- * BEST PRACTICE: Refresh tokens are stored in Redis with TTL to match expiry.
- */
+
 
 export const generateAccessToken = (userId) => {
   return jwt.sign({ id: userId }, process.env.JWT_ACCESS_SECRET, {
@@ -49,7 +43,7 @@ export const verifyRefreshToken = (token) => {
 
 export const storeRefreshToken = async (userId, token, tokenId) => {
   const key = `refresh_token:${userId}:${tokenId}`;
-  const expiry = 7 * 24 * 60 * 60; // 7 days in seconds
+  const expiry = 7 * 24 * 60 * 60; 
   await redisClient.set(key, token, { EX: expiry });
 };
 

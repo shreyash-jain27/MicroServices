@@ -13,20 +13,20 @@ const isWorkerMode = process.argv.includes('--worker');
 const startServer = async () => {
   try {
     if (isWorkerMode) {
-      // 1. Worker Mode: Just process jobs
+      
       initWorkers();
       logger.info('👷 Running in WORKER mode');
     } else {
-      // 2. API Mode: Handle HTTP requests and Listen for Pub/Sub events
+      
       app.listen(PORT, () => logger.info(`🚀 Notification API running on port ${PORT}`));
 
-      // In development, also run workers in the same process for simplicity
+      
       if (process.env.NODE_ENV === 'development') {
         initWorkers();
         logger.info('👷 Running Workers in same process (development)');
       }
 
-      // Subscribe to Cross-Service events
+      
       const subscriber = redisClient.duplicate();
       
       subscriber.on('message', (channel, message) => {

@@ -1,9 +1,7 @@
 import mongoose from 'mongoose';
 import { logger } from '@service-hub/common';
 
-/**
- * MongoDB Connection with Retry Logic
- */
+
 let retryCount = 0;
 const MAX_RETRIES = 5;
 

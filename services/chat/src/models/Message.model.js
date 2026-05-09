@@ -1,10 +1,6 @@
 import mongoose from 'mongoose';
 
-/**
- * Message Model
- * 
- * BEST PRACTICE: Compound index for fast pagination.
- */
+
 const messageSchema = new mongoose.Schema(
   {
     roomId: {
@@ -39,7 +35,7 @@ const messageSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// Compound index for history pagination
+
 messageSchema.index({ roomId: 1, createdAt: -1 });
 
 const Message = mongoose.model('Message', messageSchema);

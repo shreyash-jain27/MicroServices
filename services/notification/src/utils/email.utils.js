@@ -1,12 +1,7 @@
 import nodemailer from 'nodemailer';
 import { logger } from '@service-hub/common';
 
-/**
- * Email Transporter Utility
- * 
- * WHY: Abstracting the email provider allows us to switch from 
- * Gmail to SendGrid/SES easily.
- */
+
 
 const transporter = nodemailer.createTransport({
   host: process.env.EMAIL_HOST,
@@ -29,6 +24,6 @@ export const sendEmail = async (to, subject, html) => {
     return info;
   } catch (error) {
     logger.error(`❌ Email send failed: ${error.message}`);
-    throw error; // Throw so BullMQ knows to retry
+    throw error; 
   }
 };

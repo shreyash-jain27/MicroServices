@@ -1,12 +1,7 @@
 import { body, validationResult } from 'express-validator';
 import { ApiError } from '@service-hub/common';
 
-/**
- * Input Validation Middleware
- * 
- * PURPOSE: Sanitizes and validates user input using express-validator.
- * STRUCTURE: Returns the first error found to keep responses clean.
- */
+
 
 const handleValidationErrors = (req, res, next) => {
   const errors = validationResult(req);
