@@ -15,182 +15,203 @@ router.get('/', (req, res) => {
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Service Hub | Microservices Ecosystem</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
         <style>
             :root {
                 --primary: #6366f1;
-                --bg: #0f172a;
-                --card-bg: #1e293b;
-                --text: #f1f5f9;
+                --primary-glow: rgba(99, 102, 241, 0.4);
+                --bg: #030712;
+                --card-bg: rgba(30, 41, 59, 0.5);
+                --text: #f8fafc;
                 --text-muted: #94a3b8;
-                --success: #22c55e;
+                --success: #10b981;
+                --border: rgba(51, 65, 85, 0.5);
             }
+            * { box-sizing: border-box; }
             body {
-                font-family: 'Inter', -apple-system, sans-serif;
+                font-family: 'Plus Jakarta Sans', sans-serif;
                 background-color: var(--bg);
+                background-image: 
+                    radial-gradient(circle at 50% 0%, #1e1b4b 0%, transparent 50%),
+                    radial-gradient(circle at 0% 100%, #0f172a 0%, transparent 50%);
                 color: var(--text);
-                line-height: 1.6;
                 margin: 0;
+                min-height: 100vh;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                min-height: 100vh;
-                padding: 2rem;
+                padding: 4rem 2rem;
             }
-            .container {
-                max-width: 1000px;
-                width: 100%;
-            }
-            header {
-                text-align: center;
-                margin-bottom: 4rem;
-            }
+            .container { max-width: 1100px; width: 100%; }
+            header { text-align: center; margin-bottom: 5rem; }
             h1 {
-                font-size: 3rem;
-                margin-bottom: 0.5rem;
-                background: linear-gradient(to right, #818cf8, #c084fc);
+                font-size: 4rem;
+                font-weight: 800;
+                margin: 0;
+                letter-spacing: -0.05em;
+                background: linear-gradient(to bottom right, #fff 30%, #94a3b8);
                 -webkit-background-clip: text;
                 -webkit-text-fill-color: transparent;
             }
-            .subtitle {
-                color: var(--text-muted);
-                font-size: 1.2rem;
+            .badge {
+                display: inline-block;
+                padding: 0.25rem 0.75rem;
+                border-radius: 9999px;
+                background: rgba(99, 102, 241, 0.1);
+                color: var(--primary);
+                font-family: 'JetBrains Mono', monospace;
+                font-size: 0.875rem;
+                font-weight: 600;
+                border: 1px solid rgba(99, 102, 241, 0.2);
+                margin-bottom: 1.5rem;
             }
             .grid {
                 display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-                gap: 2rem;
-                margin-bottom: 4rem;
+                grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+                gap: 1.5rem;
             }
             .card {
                 background: var(--card-bg);
+                backdrop-filter: blur(12px);
+                border: 1px solid var(--border);
+                border-radius: 1.5rem;
                 padding: 2rem;
-                border-radius: 1rem;
-                border: 1px solid #334155;
-                transition: transform 0.2s, border-color 0.2s;
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                display: flex;
+                flex-direction: column;
             }
             .card:hover {
-                transform: translateY(-5px);
                 border-color: var(--primary);
+                transform: translateY(-8px);
+                box-shadow: 0 20px 40px -20px var(--primary-glow);
             }
-            .card h2 {
-                margin-top: 0;
+            .card-header {
                 display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                margin-bottom: 1.5rem;
+            }
+            .status-wrapper { display: flex; align-items: center; gap: 0.5rem; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--success); text-transform: uppercase; font-weight: 700; }
+            .dot { width: 8px; height: 8px; background: var(--success); border-radius: 50%; box-shadow: 0 0 12px var(--success); animation: pulse 2s infinite; }
+            @keyframes pulse { 0% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(1.2); } 100% { opacity: 1; transform: scale(1); } }
+            .platform-tag { font-size: 0.7rem; color: var(--text-muted); background: rgba(0,0,0,0.3); padding: 0.25rem 0.5rem; border-radius: 0.5rem; border: 1px solid var(--border); }
+            h2 { margin: 0; font-size: 1.5rem; font-weight: 700; }
+            p { color: var(--text-muted); font-size: 0.95rem; margin: 1rem 0 1.5rem; flex-grow: 1; }
+            .features { list-style: none; padding: 0; margin: 0 0 2rem; font-size: 0.875rem; color: #cbd5e1; }
+            .features li { margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+            .features li::before { content: "→"; color: var(--primary); font-weight: 800; }
+            .btn {
+                display: inline-flex;
                 align-items: center;
-                gap: 0.5rem;
-            }
-            .status {
-                width: 10px;
-                height: 10px;
-                background: var(--success);
-                border-radius: 50%;
-                display: inline-block;
-            }
-            .platform {
-                font-size: 0.8rem;
-                background: #334155;
-                padding: 0.2rem 0.6rem;
-                border-radius: 1rem;
-                color: var(--text-muted);
-                float: right;
-            }
-            .tech-stack {
-                margin-top: 4rem;
-                text-align: center;
-            }
-            .tech-tags {
-                display: flex;
-                flex-wrap: wrap;
                 justify-content: center;
-                gap: 0.75rem;
-                margin-top: 1rem;
+                gap: 0.5rem;
+                background: var(--primary);
+                color: white;
+                text-decoration: none;
+                padding: 0.75rem 1rem;
+                border-radius: 0.75rem;
+                font-weight: 600;
+                font-size: 0.875rem;
+                transition: filter 0.2s;
             }
-            .tag {
-                background: #312e81;
-                color: #e0e7ff;
-                padding: 0.4rem 1rem;
-                border-radius: 2rem;
-                font-size: 0.9rem;
-                font-weight: 500;
-            }
-            footer {
-                margin-top: auto;
-                color: var(--text-muted);
-                font-size: 0.9rem;
-                padding: 2rem 0;
-            }
+            .btn:hover { filter: brightness(1.2); }
+            .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--text); }
+            .btn-outline:hover { background: rgba(255,255,255,0.05); border-color: var(--text-muted); }
+            .tech-section { margin-top: 6rem; text-align: center; }
+            .tech-stack { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin-top: 2rem; }
+            .tech-item { font-family: 'JetBrains Mono', monospace; background: rgba(255,255,255,0.03); border: 1px solid var(--border); padding: 0.5rem 1rem; border-radius: 0.75rem; font-size: 0.875rem; color: var(--text-muted); }
         </style>
     </head>
     <body>
         <div class="container">
             <header>
+                <span class="badge">SYSTEM ARCHITECTURE V1.0</span>
                 <h1>Service Hub</h1>
-                <p class="subtitle">A Modern Node.js Microservices Ecosystem</p>
+                <p style="color: var(--text-muted); font-size: 1.25rem; margin-top: 1rem;">Distributed Microservices Ecosystem with Real-time Sync</p>
             </header>
 
             <div class="grid">
                 <div class="card">
-                    <span class="platform">Railway</span>
-                    <h2><span class="status"></span> API Gateway</h2>
-                    <p>Unified entry point for the entire ecosystem. Handles routing, rate limiting, and JWT verification.</p>
-                    <ul>
-                        <li>Centralized Auth Proxy</li>
-                        <li>Request Logging</li>
-                        <li>Security Headers</li>
+                    <div class="card-header">
+                        <div class="status-wrapper"><div class="dot"></div>Live</div>
+                        <span class="platform-tag">Railway</span>
+                    </div>
+                    <h2>API Gateway</h2>
+                    <p>Centralized entry point using <strong>http-proxy-middleware</strong>. Orchestrates traffic across Railway and Render clusters.</p>
+                    <ul class="features">
+                        <li>JWT Verification Middleware</li>
+                        <li>Global Rate Limiting (Redis)</li>
+                        <li>Unified SSL Termination</li>
                     </ul>
+                    <a href="/health" target="_blank" class="btn">Test Gateway Endpoint</a>
                 </div>
 
                 <div class="card">
-                    <span class="platform">Railway</span>
-                    <h2><span class="status"></span> Auth Service</h2>
-                    <p>Identity provider managing users and sessions with high security standards.</p>
-                    <ul>
-                        <li>JWT Access & Refresh Tokens</li>
-                        <li>Redis Session Storage</li>
-                        <li>Bcrypt Hashing</li>
+                    <div class="card-header">
+                        <div class="status-wrapper"><div class="dot"></div>Live</div>
+                        <span class="platform-tag">Railway</span>
+                    </div>
+                    <h2>Auth Service</h2>
+                    <p>Security-first identity service handling persistence via <strong>MongoDB</strong> and sessions via <strong>Redis</strong>.</p>
+                    <ul class="features">
+                        <li>Dual Token Strategy (Access/Refresh)</li>
+                        <li>Zod Environment Validation</li>
+                        <li>Bcrypt Password Hashing</li>
                     </ul>
+                    <a href="/auth/health" target="_blank" class="btn btn-outline">Verify Auth Status</a>
                 </div>
 
                 <div class="card">
-                    <span class="platform">Render</span>
-                    <h2><span class="status"></span> Chat Service</h2>
-                    <p>Real-time communication hub powered by WebSockets for instant messaging.</p>
-                    <ul>
-                        <li>Socket.io Integration</li>
-                        <li>Message Persistence (MongoDB)</li>
-                        <li>Redis Pub/Sub Scaling</li>
+                    <div class="card-header">
+                        <div class="status-wrapper"><div class="dot"></div>Live</div>
+                        <span class="platform-tag">Render</span>
+                    </div>
+                    <h2>Chat Service</h2>
+                    <p>High-concurrency messaging hub. Leverages <strong>Socket.io</strong> with a Redis adapter for cross-node scaling.</p>
+                    <ul class="features">
+                        <li>Full Duplex Communication</li>
+                        <li>Event-driven Architecture</li>
+                        <li>Cross-platform Data Sync</li>
                     </ul>
+                    <a href="/chat/health" target="_blank" class="btn btn-outline">Check Render Proxy</a>
                 </div>
 
                 <div class="card">
-                    <span class="platform">Railway</span>
-                    <h2><span class="status"></span> Notification Service</h2>
-                    <p>Asynchronous worker service handling all system-wide communication.</p>
-                    <ul>
-                        <li>BullMQ Background Jobs</li>
-                        <li>SMTP Email Integration</li>
-                        <li>Cross-Service Event Listening</li>
+                    <div class="card-header">
+                        <div class="status-wrapper"><div class="dot"></div>Live</div>
+                        <span class="platform-tag">Railway</span>
+                    </div>
+                    <h2>Notification Service</h2>
+                    <p>Asynchronous worker pool using <strong>BullMQ</strong>. Processes high-volume mail jobs outside main event loops.</p>
+                    <ul class="features">
+                        <li>Background Job Processing</li>
+                        <li>Redis-backed Task Queues</li>
+                        <li>Pub/Sub Event Integration</li>
                     </ul>
+                    <a href="/notifications/health" target="_blank" class="btn btn-outline">Test Worker Queue</a>
                 </div>
             </div>
 
-            <div class="tech-stack">
-                <h3>Built With Best-in-Class Technology</h3>
-                <div class="tech-tags">
-                    <span class="tag">Node.js 20</span>
-                    <span class="tag">Express</span>
-                    <span class="tag">MongoDB</span>
-                    <span class="tag">Redis</span>
-                    <span class="tag">Docker</span>
-                    <span class="tag">Socket.io</span>
-                    <span class="tag">BullMQ</span>
-                    <span class="tag">Zod</span>
-                    <span class="tag">npm Workspaces</span>
+            <div class="tech-section">
+                <h3 style="font-size: 1.5rem; font-weight: 700;">Infrastructure Stack</h3>
+                <div class="tech-stack">
+                    <span class="tech-item">Node.js 20</span>
+                    <span class="tech-item">Express.js</span>
+                    <span class="tech-item">Socket.io</span>
+                    <span class="tech-item">MongoDB Cluster</span>
+                    <span class="tech-item">Redis (Pub/Sub)</span>
+                    <span class="tech-item">BullMQ Workers</span>
+                    <span class="tech-item">Docker (Multi-stage)</span>
+                    <span class="tech-item">JWT / Bcrypt</span>
                 </div>
             </div>
 
-            <footer style="text-align: center;">
-                <p>Architecture: Monorepo Deployment &bull; 2026 Production Ready</p>
-            </header>
+            <footer style="margin-top: 6rem; padding-bottom: 4rem; text-align: center; color: var(--text-muted);">
+                <div style="width: 40px; height: 1px; background: var(--border); margin: 0 auto 2rem;"></div>
+                <p>Designed for Scalability &bull; Multi-Cloud Architecture &bull; 2026</p>
+            </footer>
         </div>
     </body>
     </html>
