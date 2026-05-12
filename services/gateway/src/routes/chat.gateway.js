@@ -6,6 +6,7 @@ import { verifyJWT } from '../middleware/jwtVerify.middleware.js';
 const router = express.Router();
 
 
+router.get('/health', setupProxy(services.chat.url));
 
 
 router.use(verifyJWT);

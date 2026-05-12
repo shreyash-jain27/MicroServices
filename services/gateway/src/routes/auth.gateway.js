@@ -7,6 +7,7 @@ import { verifyJWT } from '../middleware/jwtVerify.middleware.js';
 const router = express.Router();
 
 
+router.get('/health', setupProxy(services.auth.url));
 
 
 router.post('/register', authLimiter, setupProxy(services.auth.url));
